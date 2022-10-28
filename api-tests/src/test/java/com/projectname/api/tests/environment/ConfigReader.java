@@ -55,4 +55,3 @@ public class ConfigReader {
         return System.getenv(key);
     }
 }
-
