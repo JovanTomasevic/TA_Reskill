@@ -1,5 +1,6 @@
 package com.projectname.api.client.utils;
 
+import com.projectname.api.client.data.model.activities.GetAllActivitiesResponse;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomUtils;
 

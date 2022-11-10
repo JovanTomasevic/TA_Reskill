@@ -9,21 +9,26 @@ import com.projectname.api.tests.data.provider.ActivityProvider;
 import com.projectname.api.tests.functional.asserts.ActivitesAssert;
 import com.projectname.api.tests.init.TestBase;
 import jdk.jfr.Description;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class ActivitiesTests extends TestBase {
 
     public static ActivitesAssert activitesAssert = new ActivitesAssert();
+    CommonActivitiesRequest commonActivitiesRequest;
     public static Integer activityId;
 
-
+    @BeforeClass
+    public void prepareTestData() {
+        commonActivitiesRequest = ActivityProvider.prepareRandomActivityRequest();
+        activityId = ActivitiesAPI.createActivity(commonActivitiesRequest).getId();
+    }
     @Test(dataProvider = DataProviderNames.VERIFY_POST_ACTIVITY, dataProviderClass = ActivityProvider.class)
     @Description("Verify activity posted")
     public static void verifyActivityPosted(String suffix, CommonActivitiesRequest activityRequest) {
 
         CommonActivitiesResponse actualResponse = ActivitiesAPI.createActivity(activityRequest);
-
-        activityId = actualResponse.getId();
 
         CommonActivitiesResponse expectedResponse = CommonActivitiesResponse.parseExpectedActivitiesResponse(activityRequest);
 
@@ -48,9 +53,8 @@ public class ActivitiesTests extends TestBase {
 
         ActivitiesAPI.deleteActivity(activityId);
 
-        GetAllActivitiesResponse[] getAllActivitiesResponse = ActivitiesAPI.getAllActivitiesResponse();
+        Assert.assertTrue(activitesAssert.isActivityExistInList(ActivitiesAPI.getAllActivitiesResponse()));
 
-        activitesAssert.assertActivityDeleted(getAllActivitiesResponse);
 
     }
 

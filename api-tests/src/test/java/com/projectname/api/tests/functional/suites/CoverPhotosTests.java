@@ -8,22 +8,32 @@ import com.projectname.api.tests.data.provider.CoverPhotoProvider;
 import com.projectname.api.tests.functional.asserts.CoverPhotosAssert;
 import com.projectname.api.tests.init.TestBase;
 import jdk.jfr.Description;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class CoverPhotosTests extends TestBase {
 
     public static CoverPhotosAssert coverPhotosAssert = new CoverPhotosAssert();
+
+    CommonCoverPhotosRequest commonCoverPhotosRequest;
     public static Integer coverPhotoId;
     public static Integer bookId;
 
+    @BeforeClass
+    public void prepareTestData() {
+        commonCoverPhotosRequest = CoverPhotoProvider.prepareRandomCoverPhotoRequest();
+        coverPhotoId = CoverPhotosAPI.createCoverPhoto(commonCoverPhotosRequest).getId();
+        bookId = CoverPhotosAPI.createCoverPhoto(commonCoverPhotosRequest).getIdBook();
+
+    }
+
     @Test(dataProvider = DataProviderNames.VERIFY_POST_COVER_PHOTO, dataProviderClass = CoverPhotoProvider.class)
     @Description("Verify cover photo posted")
-    public static void verifyAuthorPosted(String suffix, CommonCoverPhotosRequest coverPhotoRequest) {
+    public static void verifyCoverPhotoPosted(String suffix, CommonCoverPhotosRequest coverPhotoRequest) {
 
         CommonCoverPhotosResponse actualResponse = CoverPhotosAPI.createCoverPhoto(coverPhotoRequest);
 
-        coverPhotoId = actualResponse.getId();
-        bookId = actualResponse.getIdBook();
 
         CommonCoverPhotosResponse expectedResponse = CommonCoverPhotosResponse.parseExpectedCoverPhotosResponse(coverPhotoRequest);
 
@@ -33,7 +43,7 @@ public class CoverPhotosTests extends TestBase {
 
     @Test(dataProvider = DataProviderNames.VERIFY_PUT_COVER_PHOTO, dataProviderClass = CoverPhotoProvider.class)
     @Description("Verify update cover photo")
-    public static void verifyUpdateActivity(String suffix, CommonCoverPhotosRequest coverPhotoRequest) {
+    public static void verifyUpdateCoverPhoto(String suffix, CommonCoverPhotosRequest coverPhotoRequest) {
 
         CommonCoverPhotosResponse actualResponse = CoverPhotosAPI.updatedCoverPhoto(coverPhotoRequest, coverPhotoId);
 
@@ -55,13 +65,11 @@ public class CoverPhotosTests extends TestBase {
 
     @Test
     @Description("Verify Author Deleted")
-    public static void verifyDeleteAuthor() {
+    public static void verifyDeleteCoverPhoto() {
 
         CoverPhotosAPI.deleteCoverPhoto(coverPhotoId);
 
-        CommonCoverPhotosResponse[] getAllCoverPhotoResponse = CoverPhotosAPI.getAllCoverPhotoResponse();
-
-        coverPhotosAssert.assertCoverPhotoDeleted(getAllCoverPhotoResponse);
+        Assert.assertTrue(coverPhotosAssert.isCoverPhotoExistInList(CoverPhotosAPI.getAllCoverPhotoResponse()));
 
     }
 

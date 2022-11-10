@@ -21,15 +21,17 @@ public class ActivitesAssert {
         }
         softAssert.assertEquals(actualResponse.getId(), expectedResponse.getId(), "ID didn't match");
         softAssert.assertEquals(actualResponse.getTitle(), expectedResponse.getTitle(), "Title didn't match");
-        softAssert.assertEquals(actualResponse.getDueDate(), expectedResponse.getDueDate().substring(0,actualResponse.getDueDate().length()), "DueDate didn't match");
+        softAssert.assertEquals(actualResponse.getDueDate(), expectedResponse.getDueDate().substring(0, actualResponse.getDueDate().length()), "DueDate didn't match");
         softAssert.assertEquals(actualResponse.getCompleted(), expectedResponse.getCompleted(), "Completed didn't match");
         softAssert.assertAll();
     }
 
-    public void assertActivityDeleted(GetAllActivitiesResponse[] getAllActivitiesResponse) {
-        for(int i = 0; i < getAllActivitiesResponse.length; i++){
-            Assert.assertNotEquals(getAllActivitiesResponse[i].getId(), activityId, "Activity is NOT deleted");
+    public boolean isActivityExistInList(GetAllActivitiesResponse[] getAllActivitiesResponse) {
+        for (int i = 0; i < getAllActivitiesResponse.length; i++) {
+            if (getAllActivitiesResponse[i].getId() == activityId) {
+                return true;
+            }
         }
-        softAssert.assertAll();
+        return false;
     }
 }

@@ -1,11 +1,13 @@
 package com.projectname.api.tests.functional.asserts;
 
 
+import com.projectname.api.client.data.model.activities.GetAllActivitiesResponse;
 import com.projectname.api.client.data.model.authors.common.CommonAuthorResponse;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 
+import static com.projectname.api.tests.functional.suites.ActivitiesTests.activityId;
 import static com.projectname.api.tests.functional.suites.AuthorTests.*;
 
 public class AuthorAssert {
@@ -37,10 +39,12 @@ public class AuthorAssert {
         softAssert.assertAll();
     }
 
-    public void assertAuthorDeleted(CommonAuthorResponse[] getAllAuthors) {
-        for(int i = 0; i < getAllAuthors.length; i++){
-            Assert.assertNotEquals(getAllAuthors[i].getId(), authorId, "Author is NOT deleted");
+    public boolean isAuthorExistInList(CommonAuthorResponse[] getAllAuthors) {
+        for (int i = 0; i < getAllAuthors.length; i++) {
+            if (getAllAuthors[i].getId() == authorId) {
+                return true;
+            }
         }
-        softAssert.assertAll();
+        return false;
     }
 }

@@ -8,22 +8,31 @@ import com.projectname.api.tests.data.provider.AuthorProvider;
 import com.projectname.api.tests.functional.asserts.AuthorAssert;
 import com.projectname.api.tests.init.TestBase;
 import jdk.jfr.Description;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class AuthorTests extends TestBase {
 
     public static AuthorAssert authorAssert = new AuthorAssert();
+
+    CommonAuthorsRequest commonAuthorsRequest;
     public static Integer authorId;
     public static Integer bookId;
+
+    @BeforeClass
+    public void prepareTestData() {
+        commonAuthorsRequest = AuthorProvider.prepareRandomAuthorsRequest();
+        authorId = AuthorsAPI.createAuthor(commonAuthorsRequest).getId();
+        bookId = AuthorsAPI.createAuthor(commonAuthorsRequest).getIdBook();
+
+    }
 
     @Test(dataProvider = DataProviderNames.VERIFY_POST_AUTHOR, dataProviderClass = AuthorProvider.class)
     @Description("Verify author posted")
     public static void verifyAuthorPosted(String suffix, CommonAuthorsRequest authorsRequest) {
 
         CommonAuthorResponse actualResponse = AuthorsAPI.createAuthor(authorsRequest);
-
-        authorId = actualResponse.getId();
-        bookId = actualResponse.getIdBook();
 
         CommonAuthorResponse expectedResponse = CommonAuthorResponse.parseExpectedAuthorResponse(authorsRequest);
 
@@ -60,9 +69,7 @@ public class AuthorTests extends TestBase {
 
         AuthorsAPI.deleteAuthor(authorId);
 
-        CommonAuthorResponse[] getAllAuthorResponse = AuthorsAPI.getAllAuthorResponse();
-
-        authorAssert.assertAuthorDeleted(getAllAuthorResponse);
+        Assert.assertTrue(authorAssert.isAuthorExistInList(AuthorsAPI.getAllAuthorResponse()));
 
     }
 }

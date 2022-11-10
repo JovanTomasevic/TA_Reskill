@@ -8,20 +8,28 @@ import com.projectname.api.tests.data.provider.BookProvider;
 import com.projectname.api.tests.functional.asserts.BookAssert;
 import com.projectname.api.tests.init.TestBase;
 import jdk.jfr.Description;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class BookTests extends TestBase {
 
     public static BookAssert bookAssert = new BookAssert();
+
+    CommonBookRequest commonBookRequest;
     public static Integer bookId;
+
+    @BeforeClass
+    public void prepareTestData() {
+        commonBookRequest = BookProvider.prepareRandomBookRequest();
+        bookId = BookAPI.createBook(commonBookRequest).getId();
+    }
 
     @Test(priority = 1, dataProvider = DataProviderNames.VERIFY_POST_BOOK, dataProviderClass = BookProvider.class)
     @Description("Verify book posted")
     public static void verifyBookPosted(String suffix, CommonBookRequest bookRequest) {
 
         CommonBookResponse actualResponse = BookAPI.createBook(bookRequest);
-
-        bookId = actualResponse.getId();
 
         CommonBookResponse expectedResponse = CommonBookResponse.parseExpectedBookResponse(bookRequest);
 
@@ -45,8 +53,6 @@ public class BookTests extends TestBase {
     public static void verifyBookDeleted() {
         BookAPI.deleteBook(bookId);
 
-        CommonBookResponse[] getAllBooksResponse = BookAPI.getAllBookResponse();
-
-        bookAssert.assertBookDeleted(getAllBooksResponse);
+        Assert.assertTrue(bookAssert.isBookExistInList(BookAPI.getAllBookResponse()));
     }
 }

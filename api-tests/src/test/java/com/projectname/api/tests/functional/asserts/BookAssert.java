@@ -1,8 +1,10 @@
 package com.projectname.api.tests.functional.asserts;
 
+import com.projectname.api.client.calls.ActivitiesAPI;
 import com.projectname.api.client.data.model.books.common.CommonBookResponse;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
+
 import static com.projectname.api.tests.functional.suites.BookTests.*;
 
 public class BookAssert {
@@ -22,14 +24,18 @@ public class BookAssert {
         softAssert.assertEquals(actualResponse.getDescription(), expectedResponse.getDescription(), "Description didn't match");
         softAssert.assertEquals(actualResponse.getPageCount(), expectedResponse.getPageCount(), "Page count didn't match");
         softAssert.assertEquals(actualResponse.getExcerpt(), expectedResponse.getExcerpt(), "Excerpt didn't match");
-        softAssert.assertEquals(actualResponse.getPublishDate(), expectedResponse.getPublishDate().substring(0,actualResponse.getPublishDate().length()), "Publish Date didn't match");
+        softAssert.assertEquals(actualResponse.getPublishDate(), expectedResponse.getPublishDate().substring(0, actualResponse.getPublishDate().length()), "Publish Date didn't match");
         softAssert.assertAll();
     }
 
-    public void assertBookDeleted(CommonBookResponse[] getAllBooks) {
-        for(int i = 0; i < getAllBooks.length; i++){
-            Assert.assertNotEquals(getAllBooks[i].getId(), bookId, "Book is NOT deleted");
+    public boolean isBookExistInList(CommonBookResponse[] getAllBooks) {
+        for (int i = 0; i < getAllBooks.length; i++) {
+
+            if (getAllBooks[i].getId() == bookId) {
+                return true;
+            }
         }
-        softAssert.assertAll();
+        return false;
     }
+
 }

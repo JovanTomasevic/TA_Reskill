@@ -34,10 +34,13 @@ public class CoverPhotosAssert {
         softAssert.assertAll();
     }
 
-    public void assertCoverPhotoDeleted(CommonCoverPhotosResponse[] getAllCoverPhotos) {
+    public boolean isCoverPhotoExistInList(CommonCoverPhotosResponse[] getAllCoverPhotos) {
         for(int i = 0; i < getAllCoverPhotos.length; i++){
-            Assert.assertNotEquals(getAllCoverPhotos[i].getId(), coverPhotoId, "Cover Photo is NOT deleted");
+
+            if(getAllCoverPhotos[i].getId() == coverPhotoId) {
+                return true;
+            }
         }
-        softAssert.assertAll();
+        return false;
     }
 }

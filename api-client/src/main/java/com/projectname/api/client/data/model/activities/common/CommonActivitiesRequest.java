@@ -34,6 +34,7 @@ public class CommonActivitiesRequest implements Serializable
         this.completed = completed;
     }
 
+
     public Integer getId() {
         return id;
     }
