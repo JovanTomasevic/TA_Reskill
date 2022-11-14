@@ -14,4 +14,10 @@ public class DataProviderNames {
     public static final String VERIFY_POST_COVER_PHOTO = "verifyPostCoverPhoto";
 
     public static final String VERIFY_PUT_COVER_PHOTO = "verifyPutCoverPhoto";
+
+    public static final String VERIFY_CROC_REQUIRED_FIELD = "verifyCrocRequiredField";
+
+    public static final String VERIFY_CANNOT_LOGIN_WITH_NON_EXISTING_USER = "verifyCannotLoginWithNonExistingUser";
+
+    public static final String VERIFY_USER_REGISTER_REQUIRED_FIELD = "verifyUserRegisterRequiredField";
 }

@@ -280,3 +280,6 @@ htec-ga-java-template.iml
 /api-tests/api-tests.iml
 /e2e/e2e.iml
 /performance/performance.iml
+
+# Environment File
+env-api.properties

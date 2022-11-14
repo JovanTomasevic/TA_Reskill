@@ -37,4 +37,24 @@ public class ConfigSetup extends ConfigReader {
         return getValue("BASE_URL");
     }
 
+    public static String getCrocBaseUrl() {
+        return getValue("CROC_BASE_URL");
+    }
+
+    public static String getMainUser() {
+        return getValue("MAIN_USER");
+    }
+
+    public static String getSecondUser() {
+        return getValue("SECOND_USER");
+    }
+
+    public static String getNonExistingUser() {
+        return getValue("NON_EXISTING_USER");
+    }
+
+    public static String getPass() {
+        return getValue("PASSWORD");
+    }
+
 }
