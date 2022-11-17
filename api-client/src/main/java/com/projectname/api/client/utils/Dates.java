@@ -4,6 +4,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Dates {
 
@@ -56,6 +57,12 @@ public class Dates {
     public static LocalDateTime parseMillisecondsToLocalDateTime(Long dateInMillis) {
 
         return LocalDateTime.ofInstant(Instant.ofEpochMilli(dateInMillis), ZoneId.systemDefault());
+    }
+
+    public static String getRandomDateTime() {
+        Random random = new Random();
+        LocalDateTime dateTime = LocalDateTime.now().minusDays(random.nextInt(10000));
+        return String.valueOf(dateTime);
     }
 
     public static LocalDateTime parseToSimpleDateTimeFormat(LocalDateTime dateTime) {

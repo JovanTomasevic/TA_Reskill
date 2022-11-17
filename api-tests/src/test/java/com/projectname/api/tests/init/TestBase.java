@@ -22,11 +22,12 @@ public class TestBase implements ITest {
     //    Use to set base url for test methods; If not set, localhost:8080 is used as default
     @BeforeSuite(groups = {"integration", "regression", "smoke", "knownBugs"})
     public void beforeSuite(ITestContext context) {
-        RestAssured.baseURI = ConfigSetup.getApiBaseURL();
+        RestAssured.baseURI = ConfigSetup.getBaseUrl();
     }
-    
+
     @BeforeClass(groups = {"integration", "regression", "smoke", "knownBugs"})
     public void beforeClass() {
+        RestAssured.baseURI = ConfigSetup.getBaseUrl();
     }
 
     // Used for allure reports to read fist param from test data
