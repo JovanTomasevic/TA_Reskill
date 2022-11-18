@@ -9,6 +9,7 @@ import com.projectname.api.tests.environment.ConfigSetup;
 import com.projectname.api.tests.functional.asserts.CommonErrorAssert;
 import com.projectname.api.tests.init.TestBase;
 import io.restassured.RestAssured;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -26,6 +27,10 @@ public class CrocodileSecurityTests extends TestBase {
         accessTokenMainUser = CrocodilesAPI.loginUser(new LoginRequest(ConfigSetup.getMainUser(), ConfigSetup.getPass())).getAccess();
         accessTokenSecondUser = CrocodilesAPI.loginUser(new LoginRequest(ConfigSetup.getSecondUser(), ConfigSetup.getPass())).getAccess();
         crocId = CrocodilesAPI.createCrocodile(accessTokenMainUser, CrocodileProvider.prepareCrocodileRequest()).getId();
+    }
+    @AfterClass
+    public void deleteDataForTest() {
+        CrocodilesAPI.deleteCrocodile(accessTokenMainUser, crocId);
     }
 
     @Test

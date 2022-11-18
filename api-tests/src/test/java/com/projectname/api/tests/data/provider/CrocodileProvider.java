@@ -38,13 +38,6 @@ public class CrocodileProvider {
         return createCrocodile;
     }
 
-    public static RequiredCrocFieldErrorResponse prepareErrorMessageForSex() {
-        RequiredCrocFieldErrorResponse errorResponse = new RequiredCrocFieldErrorResponse();
-        errorResponse.setSex(Arrays.asList(ErrorMessages.FIELD_IS_REQUIRED));
-        return errorResponse;
-    }
-
-
     public static LoginRequest prepareLoginRequest() {
         LoginRequest loginRequest = new LoginRequest(RandomStringGenerator.createRandomStringAlphabeticWithLen(6), RandomStringGenerator.createRandomStringAlphanumericWithLen(6));
         return loginRequest;

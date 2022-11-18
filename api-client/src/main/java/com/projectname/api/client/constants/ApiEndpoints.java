@@ -41,15 +41,10 @@ public class ApiEndpoints {
         return COVER_PHOTOS + "/books/covers/" + bookId;
     }
     public static final String LOGIN_USER = "auth/token/login/";
-
-    public static final String GET_MY_CROCODILES = "my/crocodiles/";
-
     public static final String REGISTER_USER = "user/register/";
-
     public static final String GET_MY_CROCODILE(Integer id) {
-        return "my/crocodiles/" + id+ "/";
+        return CROCODILES + id+ "/";
     }
-
-    public static final String CREATE_CROCODILE = "my/crocodiles/";
+    public static final String CROCODILES = "my/crocodiles/";
 
 }
