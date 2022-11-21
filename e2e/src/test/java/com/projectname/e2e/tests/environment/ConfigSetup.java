@@ -13,7 +13,7 @@ public class ConfigSetup extends ConfigReader {
         String currentEnv = System.getProperty("environment");
         System.out.println(currentEnv);
         String env = currentEnv != null && !currentEnv.isEmpty() ? currentEnv : TEST;
-        String base_url = "https://" + env + "reqres.in/";
+        String base_url = "https://phptravels.com/";
         System.out.println(base_url);
         return base_url;
     }
