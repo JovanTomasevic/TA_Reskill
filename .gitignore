@@ -283,4 +283,5 @@ htec-ga-java-template.iml
 
 # Environment File
 api-tests/src/test/resources/env-api.properties
+e2e/src/test/resources/env-e2e.properties
 

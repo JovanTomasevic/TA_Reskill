@@ -9,6 +9,7 @@ import com.projectname.e2e.tests.webdriver.CustomWebDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
+import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -76,7 +77,7 @@ public class TestBase implements ITest, IInvokedMethodListener {
 
         getDriver().get(baseUrl);
         getDriver().manage().window().maximize();
-        getDriver().waitForElementToBePresent(CustomBy.testAutomationId("emailInput"));
+        getDriver().waitForElementToBePresent(By.xpath("//div[2]/div/div[1]/a/div/div"));
         getDriver().addMouseFollowOnClick();
     }
 
