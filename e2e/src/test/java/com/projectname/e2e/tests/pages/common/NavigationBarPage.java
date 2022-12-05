@@ -1,9 +1,6 @@
 package com.projectname.e2e.tests.pages.common;
 
-import com.projectname.e2e.tests.pages.CarsPage;
-import com.projectname.e2e.tests.pages.DemoPage;
-import com.projectname.e2e.tests.pages.FlightsPage;
-import com.projectname.e2e.tests.pages.HotelsPage;
+import com.projectname.e2e.tests.pages.*;
 import com.projectname.e2e.tests.selectors.CustomBy;
 import com.projectname.e2e.tests.utils.CheckIfElement;
 import com.projectname.e2e.tests.webdriver.CustomWebDriver;
@@ -66,6 +63,15 @@ public class NavigationBarPage extends PageBase {
         }
     }
 
+    private WebElement getLoginBtn() {
+        try {
+            return driver.findElement(CustomBy.xpath("//*[@id=\"loginSignup\"]/li[1]/a"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Could not find login button on Navigation bar page", e);
+        }
+    }
+
     private WebElement getHotelsBtn() {
         getFeaturesBtn().click();
         try {
@@ -83,6 +89,15 @@ public class NavigationBarPage extends PageBase {
         } catch (Exception e) {
             e.printStackTrace();
             throw new AssertionError("Could not find cars button on Navigation bar page", e);
+        }
+    }
+
+    private WebElement getSignupButton() {
+        try {
+            return driver.findElement(CustomBy.xpath("//*[@id=\"loginSignup\"]/li[2]/a"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Could not find signup button on Navigation bar page", e);
         }
     }
 
@@ -104,5 +119,15 @@ public class NavigationBarPage extends PageBase {
     public IntegrationDropdownPage openIntegrationsDropdownPage() {
         getIntegrationsDropdownBtn().click();
         return new IntegrationDropdownPage(driver, url, email, password);
+    }
+
+    public SignupPage openSignupPage() {
+        getSignupButton().click();
+        return new SignupPage(driver, url, email, password);
+    }
+
+    public LoginPage openLoginPage() {
+        getLoginBtn().click();
+        return new LoginPage(driver, url, email, password);
     }
 }
