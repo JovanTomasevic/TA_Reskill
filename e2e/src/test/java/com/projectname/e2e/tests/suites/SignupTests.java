@@ -52,7 +52,6 @@ public class SignupTests extends TestBase {
 
         accountUpdatePage.updateUser(userRequest);
 
-
         UserPage userPage = new UserPage(getDriver(), "","","");
         userPage.show();
 

@@ -7,6 +7,8 @@ import com.projectname.e2e.tests.utils.CheckIfElement;
 import com.projectname.e2e.tests.webdriver.CustomWebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
+
 public class UserPage extends PageBase {
     public UserPage(CustomWebDriver driver, String url, String email, String password) {
         super(driver, url, email, password);
@@ -14,16 +16,18 @@ public class UserPage extends PageBase {
 
     @Override
     public PageBase show() {
-     //   if (!isDisplayed()) {
+        if (!isDisplayed()) {
             AccountUpdatePage accountUpdatePage = new AccountUpdatePage(driver, url, email, password);
             accountUpdatePage.openUserPage();
-    //    }
+        }
+        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(1));
         return this;
     }
 
     @Override
     public boolean isDisplayed() {
-        return CheckIfElement.isDisplayed(CustomBy.xpath("//*[@id=\"Secondary_Navbar-Account\"]/a"), driver);
+        return CheckIfElement.isDisplayed(CustomBy.xpath("//*[@id=\"main-body\"]/div/div[1]/div[1]/div[1]/div/div[3]/a"), driver);
     }
 
     private WebElement getFirstAndLastName() {

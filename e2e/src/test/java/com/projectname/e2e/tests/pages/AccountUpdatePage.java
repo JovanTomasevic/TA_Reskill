@@ -16,10 +16,10 @@ public class AccountUpdatePage extends PageBase {
 
     @Override
     public PageBase show() {
-        //  if (!isDisplayed()) {
+          if (isDisplayed()) {
         UserPage userPage = new UserPage(driver, url, email, password);
         userPage.openAccountUpdatePage();
-        //  }
+          }
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
         return this;
